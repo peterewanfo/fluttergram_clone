@@ -42,19 +42,41 @@ class ProfileListContentWidget extends HookWidget {
               children: <Widget>[
                 Column(
                   children: [
-                    Row(
-                      children: [
-                        CachedImageWidget(
-                          height: 40.0,
-                          width: 40.0,
-                          isCircular: true,
-                          img_url: context
-                              .read(userViewModel)
-                              .getCurrentUser()!
-                              .photoURL
-                              .toString(),
-                        ),
-                      ],
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                        horizontal: CustomDimensions.defaultMargin,
+                      ),
+                      child: Row(
+                        children: [
+                          CachedImageWidget(
+                            height: 40.0,
+                            width: 40.0,
+                            isCircular: true,
+                            img_url: context
+                                .read(userViewModel)
+                                .getCurrentUser()!
+                                .photoURL
+                                .toString(),
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                context
+                                    .read(userViewModel)
+                                    .getCurrentUser()!
+                                    .displayName
+                                    .toString(),
+                              ),
+                              Text(
+                                feedModel.location.toString(),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                     CachedNetworkImage(
                       imageUrl: feedModel.mediaUrl.toString(),
