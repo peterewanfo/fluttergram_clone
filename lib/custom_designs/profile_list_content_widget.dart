@@ -62,6 +62,8 @@ class ProfileListContentWidget extends HookWidget {
                             width: 10.0,
                           ),
                           Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 context

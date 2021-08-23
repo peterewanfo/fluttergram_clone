@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -53,7 +54,10 @@ class FeedsViewModel extends ChangeNotifier {
     await reader(feedsRepositoryProvider)
         .likeFeed(username: username, postId: postId, action: action);
 
-    this.likeClicked = "";
+    Timer(const Duration(milliseconds: 2000), () {
+      this.likeClicked = "";
+    });
+
 
   }
 }
