@@ -33,8 +33,7 @@ class LoginView extends HookWidget {
                       .read(userAccessRepositoryProvider)
                       .authStateChanges,
                   builder: (context, snapshot) {
-                    User? user =
-                        context.read(userViewModel).getCurrentUser();
+                    User? user = context.read(userViewModel).getCurrentUser();
                     if (snapshot.hasData && user != null) {
                       print(user.photoURL);
                       return Column(
@@ -46,18 +45,18 @@ class LoginView extends HookWidget {
                             height: 10.0,
                           ),
                           Container(
-                            child: context
-                                        .read(userViewModel)
-                                        .getCurrentUser() !=
-                                    null
-                                ? CachedImageWidget(
-                                    img_url: user.photoURL.toString(),
-                                    width: 100,
-                                    height: 100,
-                                  )
-                                : Center(
-                                    child: Text("Pic"),
-                                  ),
+                            child:
+                                context.read(userViewModel).getCurrentUser() !=
+                                        null
+                                    ? CachedImageWidget(
+                                        img_url: user.photoURL.toString(),
+                                        isCircular: true,
+                                        width: 100,
+                                        height: 100,
+                                      )
+                                    : Center(
+                                        child: Text("Pic"),
+                                      ),
                           ),
                           SizedBox(
                             height: 5.0,
@@ -69,7 +68,7 @@ class LoginView extends HookWidget {
                           CustomButton(
                             button_width: 100,
                             title: "Go to Home",
-                            onTap: (){
+                            onTap: () {
                               Navigator.of(context).pushNamed(Routes.home_view);
                             },
                           ),
@@ -77,10 +76,8 @@ class LoginView extends HookWidget {
                             height: 10.0,
                           ),
                           InkWell(
-                            onTap: ()async{
-                              await context
-                                  .read(userViewModel)
-                                  .signOut();
+                            onTap: () async {
+                              await context.read(userViewModel).signOut();
                             },
                             child: Text(
                               "LOGOUT",
@@ -94,21 +91,16 @@ class LoginView extends HookWidget {
                     } else {
                       return InkWell(
                         onTap: () async {
-                          await context
-                              .read(userViewModel)
-                              .signInWithGoogle();
+                          await context.read(userViewModel).signInWithGoogle();
 
                           final data = await context
                               .read(userViewModel)
                               .getCurrentUser();
 
                           if (data != null) {
-                            context
-                                .read(userViewModel)
-                                .logged_in = true;
+                            context.read(userViewModel).logged_in = true;
                             // Navigator.of(context).pushNamed(Routes.home_view);
                           }
-
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

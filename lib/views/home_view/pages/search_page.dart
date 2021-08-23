@@ -18,7 +18,7 @@ class SearchPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Text("Search users"),
+            child: Text("Activities"),
           )
         ],
       ),

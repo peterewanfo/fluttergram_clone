@@ -3,6 +3,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fluttergram_clone/custom_designs/cached_image_widget.dart';
 import 'package:fluttergram_clone/models/owner_user_model.dart';
 import 'package:fluttergram_clone/services/repositories/user_repositories.dart';
 import 'package:fluttergram_clone/view_model/feeds_viewmodel.dart';
@@ -20,41 +21,6 @@ class ProfileListContentWidget extends HookWidget {
     return Container(
       child: Column(
         children: [
-          FutureBuilder<OwnerUserModel?>(
-            future: context
-                .read(userAccessRepositoryProvider)
-                .getUserByOwnerId(owner_id: feedModel.ownerId.toString()),
-            builder: (context, snapshot) {
-              OwnerUserModel? ownerUserModel = snapshot.data;
-
-              if (ownerUserModel != null) {
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: CachedNetworkImageProvider(
-                        ownerUserModel.photo_url.toString()),
-                    backgroundColor: Colors.grey,
-                  ),
-                  title: GestureDetector(
-                    child: Text(
-                      ownerUserModel.username.toString(),
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onTap: () {
-                      // openProfile(context, ownerId);
-                    },
-                  ),
-                  subtitle: Text(feedModel.location.toString()),
-                  trailing: const Icon(Icons.more_vert),
-                );
-              }
-
-              // snapshot data is null here
-              return Container();
-            },
-          ),
           GestureDetector(
             onDoubleTap: () {
               context.read(feedViewModel).likeContent(
@@ -70,15 +36,29 @@ class ProfileListContentWidget extends HookWidget {
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                CachedNetworkImage(
-                  imageUrl: feedModel.mediaUrl.toString(),
-                  fit: BoxFit.fitWidth,
-                  placeholder: (context, url) => SizedBox(
-                    height: 40.0,
-                    width: 40.0,
-                    child: CupertinoActivityIndicator(),
-                  ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        CachedImageWidget(
+                          height: 40.0,
+                          width: 40.0,
+                          isCircular: true,
+                          img_url: context.read(userViewModel).getCurrentUser()!.photoURL.toString(),
+                        ),
+                      ],
+                    ),
+                    CachedNetworkImage(
+                      imageUrl: feedModel.mediaUrl.toString(),
+                      fit: BoxFit.fitWidth,
+                      placeholder: (context, url) => SizedBox(
+                        height: 40.0,
+                        width: 40.0,
+                        child: CupertinoActivityIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                  ],
                 ),
                 (context.read(feedViewModel).likeClicked == feedModel.postId.toString())
                     ? Positioned(
