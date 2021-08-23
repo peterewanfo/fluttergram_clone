@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttergram_clone/custom_designs/cached_image_widget.dart';
 import 'package:fluttergram_clone/models/owner_user_model.dart';
 import 'package:fluttergram_clone/services/repositories/user_repositories.dart';
+import 'package:fluttergram_clone/style/__style.dart';
 import 'package:fluttergram_clone/view_model/feeds_viewmodel.dart';
 import 'package:fluttergram_clone/view_model/user_viewmodel.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -19,6 +20,9 @@ class ProfileListContentWidget extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(
+        top: CustomDimensions.defaultMargin,
+      ),
       child: Column(
         children: [
           GestureDetector(
@@ -44,7 +48,11 @@ class ProfileListContentWidget extends HookWidget {
                           height: 40.0,
                           width: 40.0,
                           isCircular: true,
-                          img_url: context.read(userViewModel).getCurrentUser()!.photoURL.toString(),
+                          img_url: context
+                              .read(userViewModel)
+                              .getCurrentUser()!
+                              .photoURL
+                              .toString(),
                         ),
                       ],
                     ),
@@ -60,7 +68,8 @@ class ProfileListContentWidget extends HookWidget {
                     ),
                   ],
                 ),
-                (context.read(feedViewModel).likeClicked == feedModel.postId.toString())
+                (context.read(feedViewModel).likeClicked ==
+                        feedModel.postId.toString())
                     ? Positioned(
                         child: Container(
                           width: 100,
